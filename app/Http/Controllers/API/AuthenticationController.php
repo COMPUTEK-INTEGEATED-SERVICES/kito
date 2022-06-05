@@ -25,6 +25,7 @@ class AuthenticationController extends Controller
         try {
             //try authenticating the user
             $token = AuthenticationActions::login($request);
+            return $this->successResponse($token, 'Login successful');
         }catch (\Throwable $th){
             //if the error code is 400, credentials are invalid
             if ($th->getCode() == 400)
@@ -38,8 +39,6 @@ class AuthenticationController extends Controller
             //else this error details should be seen only by engineer
             report($th);
             return $this->errorResponse([], 'Sorry an error occurred, our engineers has been notified');
-        } finally {
-            return $this->successResponse($token, 'Login successful');
         }
     }
 
@@ -78,10 +77,9 @@ class AuthenticationController extends Controller
 
         try {
             AuthenticationActions::sendPasswordResetToken($request);
+            return $this->successResponse([], 'An OTP has been sent to your email address');
         }catch (\Throwable $throwable){
             return $this->errorResponse([], $throwable->getMessage());
-        } finally {
-            return $this->successResponse([], 'An OTP has been sent to your email address');
         }
     }
 
@@ -99,10 +97,9 @@ class AuthenticationController extends Controller
 
         try {
             AuthenticationActions::submitPasswordResetToken($request);
+            return $this->successResponse([], 'Password updated successfully');
         }catch (\Throwable $throwable){
             return $this->errorResponse([], $throwable->getMessage());
-        } finally {
-            return $this->successResponse([], 'Password updated successfully');
         }
     }
 
@@ -119,10 +116,9 @@ class AuthenticationController extends Controller
 
         try {
             AuthenticationActions::verifyRegistrationOtp($request);
+            return $this->successResponse([], 'Password updated successfully');
         }catch (\Throwable $throwable){
             return $this->errorResponse([], $throwable->getMessage());
-        } finally {
-            return $this->successResponse([], 'Password updated successfully');
         }
     }
 
@@ -139,10 +135,9 @@ class AuthenticationController extends Controller
 
         try {
             AuthenticationActions::resendEmailToken($request);
+            return $this->successResponse([], 'A token has been sent to '.$request->new_email?$request->new_email:$request->email);
         }catch (\Throwable $throwable){
             return $this->errorResponse([], $throwable->getMessage());
-        } finally {
-            return $this->successResponse([], 'A token has been sent to '.$request->new_email?$request->new_email:$request->email);
         }
     }
 }
