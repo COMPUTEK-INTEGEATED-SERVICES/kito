@@ -13,19 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('variant_values', function (Blueprint $table) {
+        Schema::create('countries', function (Blueprint $table) {
             $table->id();
-            $table->integer('variant_id');
-            $table->string('value');
+            $table->string('name');
             $table->timestamps();
-        });
-
-        Schema::table('variant_values', function (Blueprint $table) {
-            $table->foreign('variant_id')
-                ->references('id')
-                ->on('variants')
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
         });
     }
 
@@ -36,6 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('variant_values');
+        Schema::dropIfExists('countries');
     }
 };

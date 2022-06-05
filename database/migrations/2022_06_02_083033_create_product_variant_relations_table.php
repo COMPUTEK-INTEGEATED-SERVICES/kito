@@ -15,18 +15,30 @@ return new class extends Migration
     {
         Schema::create('product_variant_relations', function (Blueprint $table) {
             $table->id();
-            $table->foreign('product_id')->on('products')
-                ->cascadeOnDelete()
-                ->cascadeOnUpdate();
-            $table->foreign('variant_id')->on('variants')
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
-            $table->foreign('sku_id')->on('skus')
-                ->cascadeOnUpdate()
-                ->cascadeOnDelete();
+            $table->integer('product_id');
+            $table->integer('variant_id');
+            $table->integer('sku_id');
             $table->string('variant_value');
             $table->softDeletes();
             $table->timestamps();
+        });
+
+        Schema::table('product_variant_relations', function (Blueprint $table) {
+            $table->foreign('product_id')
+                ->references('id')
+                ->on('products')
+                ->cascadeOnDelete()
+                ->cascadeOnUpdate();
+            $table->foreign('variant_id')
+                ->references('id')
+                ->on('variants')
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
+            $table->foreign('sku_id')
+                ->references('id')
+                ->on('skus')
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
         });
     }
 

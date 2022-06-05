@@ -17,13 +17,22 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('description');
+            $table->integer('parent_id');
+                //->nullable()
+                //->references('id')
+                //->on('categories')
+                //->cascadeOnDelete()
+                //->cascadeOnUpdate();
+            $table->timestamps();
+        });
+
+        Schema::table('categories', function (Blueprint $table) {
             $table->foreign('parent_id')
                 ->nullable()
                 ->references('id')
                 ->on('categories')
                 ->cascadeOnDelete()
                 ->cascadeOnUpdate();
-            $table->timestamps();
         });
     }
 

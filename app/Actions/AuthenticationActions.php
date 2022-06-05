@@ -50,7 +50,7 @@ class AuthenticationActions
             $user = User::create([
                 'name'=>$request->name,
                 'email'=>$request->email,
-                'phone'=>$request->phon,
+                'phone'=>$request->phone,
                 'password'=>Hash::make($request->password),
                 'state_id'=>$request->state_id,
                 'city_id'=>$request->city_id
